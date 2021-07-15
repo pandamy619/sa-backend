@@ -3,6 +3,7 @@ import os
 from fastapi import FastAPI, File, UploadFile, status, HTTPException
 
 import constants
+import file_manager
 
 app = FastAPI()
 
@@ -17,21 +18,13 @@ async def init():
 @app.post(constants.UPLOAD_URL)
 async def upload_file(file: UploadFile = File(...)):
     """Handles file uploading."""
-    if '.' not in file.filename:
+    file_ext = file_manager.determine_file_ext(file.filename)
+    if not file_ext:
         raise HTTPException(status_code=415, detail='Unknown file type')
-    ext = file.filename.rsplit('.', maxsplit=1)[1]
-    if ext not in constants.SUPPORTED_EXTENSIONS:
+    if file_ext not in constants.SUPPORTED_EXTENSIONS:
         raise HTTPException(status_code=415, detail='Invalid file type')
-    new_file_name = os.path.join(constants.UPLOAD_DIR_NAME,
-                                 file.filename)
-    chunks_count = 0
-    new_file = open(new_file_name, 'wb')
-    while content := await file.read(constants.FILE_CHUNK_SIZE):
-        new_file.write(content)
-        chunks_count += 1
-        if chunks_count > constants.CHUNKS_LIMIT:
-            new_file.close()
-            os.remove(new_file_name)
-            raise HTTPException(status_code=415, detail='Too large file')
-    new_file.close()
-    return status.HTTP_200_OK
+    successfully_written = await file_manager.save_file(file)
+    if successfully_written:
+        return status.HTTP_200_OK
+    else:
+        raise HTTPException(status_code=415, detail='Too large file')

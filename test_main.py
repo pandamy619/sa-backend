@@ -15,7 +15,6 @@ class FileName(enum.Enum):
     OK_XLSX = 'test.xlsx'
     UNKNOWN_TYPE = 'unknown type'
     INVALID_TYPE = 'invalid type.txt'
-    TOO_LARGE = 'large.csv'
 
 
 def _test_valid_file_uploading(file_name):

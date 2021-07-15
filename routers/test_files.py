@@ -4,9 +4,9 @@ import os
 from fastapi.testclient import TestClient
 
 from constants import UPLOAD_URL, TESTING_FILES_DIR, UPLOAD_DIR_NAME
-from main import main
+from main import main as create_app
 
-app = main()
+app = create_app()
 client = TestClient(app)
 
 

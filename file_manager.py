@@ -5,7 +5,7 @@ from fastapi import UploadFile
 import constants
 
 
-async def save_file(file: UploadFile):
+async def save_file(file: UploadFile) -> bool:
     """Reads loaded to backend file and writes its content to new file."""
     new_file_name = os.path.join(constants.UPLOAD_DIR_NAME,
                                  file.filename)
@@ -22,7 +22,7 @@ async def save_file(file: UploadFile):
     return True
 
 
-def determine_file_ext(file_name):
+def determine_file_ext(file_name: str) -> str:
     """Determines file extension by file name."""
     if '.' not in file_name:
         return None

@@ -18,7 +18,7 @@ class FileName(enum.Enum):
     INVALID_TYPE = 'invalid type.txt'
 
 
-def _test_valid_file_uploading(file_name):
+def _test_valid_file_uploading(file_name: str):
     with open(os.path.join(TESTING_FILES_DIR, file_name), 'rb') as upld_file:
         files = {'file': upld_file}
         response = client.post(UPLOAD_URL, files=files)

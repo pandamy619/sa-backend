@@ -1,18 +1,9 @@
-import os
-
 from fastapi import File, UploadFile, status, HTTPException, APIRouter
 
 import file_related.constants as file_consts
 import file_related.functions as file_functions
 
 router = APIRouter()
-
-
-@router.on_event('startup')
-async def prepare_uploading_dir():
-    """Checks existence of uploading file dir and creates it if necessary."""
-    if not os.path.isdir(file_consts.UPLOAD_DIR_NAME):
-        os.mkdir(file_consts.UPLOAD_DIR_NAME)
 
 
 @router.post(file_consts.UPLOAD_URL)

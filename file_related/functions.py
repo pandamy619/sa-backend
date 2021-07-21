@@ -10,6 +10,12 @@ FILE_CHUNK_SIZE = 1048576
 CHUNKS_LIMIT = 300
 
 
+def create_dir_for_uploads():
+    """Creates uploading dir if it doesn't exist."""
+    if not os.path.isdir(UPLOAD_DIR_NAME):
+        os.mkdir(UPLOAD_DIR_NAME)
+
+
 async def save_file(file: UploadFile) -> bool:
     """Reads loaded to backend file and writes its content to new file."""
     new_file_name = os.path.join(UPLOAD_DIR_NAME, file.filename)

@@ -2,7 +2,7 @@ import os
 
 from fastapi import UploadFile
 
-from routers.file_constants import UPLOAD_DIR_NAME
+from file_related.constants import UPLOAD_DIR_NAME
 
 # 1 MB.
 FILE_CHUNK_SIZE = 1048576

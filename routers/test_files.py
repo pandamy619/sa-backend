@@ -3,10 +3,10 @@ import os
 
 from fastapi.testclient import TestClient
 
-from routers.file_constants import UPLOAD_URL, UPLOAD_DIR_NAME
+from file_related.constants import UPLOAD_URL, UPLOAD_DIR_NAME
 from main import main as create_app
 
-TESTING_FILES_DIR = 'test_uploading_files'
+TESTING_FILES_DIR = os.path.join('file_related', 'testing_uploads')
 app = create_app()
 client = TestClient(app)
 

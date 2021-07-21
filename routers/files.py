@@ -16,7 +16,7 @@ async def prepare_uploading_dir():
 
 
 @router.post(file_consts.UPLOAD_URL)
-async def upload_file(file: UploadFile = File(...)):
+async def upload_file(file: UploadFile = File(...)) -> int:
     """Handles file uploading."""
     file_ext: str = file_functions.determine_file_ext(file.filename)
     if not file_ext:

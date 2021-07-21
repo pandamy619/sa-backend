@@ -1,4 +1,5 @@
 import os
+from typing import Union
 
 from fastapi import UploadFile
 
@@ -25,7 +26,7 @@ async def save_file(file: UploadFile) -> bool:
     return True
 
 
-def determine_file_ext(file_name: str) -> str:
+def determine_file_ext(file_name: str) -> Union[str, None]:
     """Determines file extension by file name."""
     if '.' not in file_name:
         return None

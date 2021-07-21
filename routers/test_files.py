@@ -12,6 +12,8 @@ client = TestClient(app)
 
 
 class FileName(enum.Enum):
+    """Files used during testing."""
+
     OK_CSV = 'test.csv'
     OK_XLS = 'test.xls'
     OK_XLSX = 'test.xlsx'
@@ -20,6 +22,7 @@ class FileName(enum.Enum):
 
 
 def _test_valid_file_uploading(file_name: str):
+    """Checks that API returns status 200 and saves uploaded file."""
     with open(os.path.join(TESTING_FILES_DIR, file_name), 'rb') as upld_file:
         files = {'file': upld_file}
         response = client.post(UPLOAD_URL, files=files)
@@ -30,18 +33,22 @@ def _test_valid_file_uploading(file_name: str):
 
 
 def test_upload_file_success_csv():
+    """Tests correct .csv file uploading."""
     _test_valid_file_uploading(FileName.OK_CSV.value)
 
 
 def test_upload_file_success_xls():
+    """Tests correct .xls file uploading."""
     _test_valid_file_uploading(FileName.OK_XLS.value)
 
 
 def test_upload_file_success_xlsx():
+    """Tests correct .xlsx file uploading."""
     _test_valid_file_uploading(FileName.OK_XLSX.value)
 
 
 def test_unknown_file_type():
+    """Checks that API returns status 415 for file without extension."""
     file_name = os.path.join(TESTING_FILES_DIR, FileName.UNKNOWN_TYPE.value)
     with open(file_name, 'rb') as up_file:
         files = {'file': up_file}
@@ -52,6 +59,7 @@ def test_unknown_file_type():
 
 
 def test_invalid_file_type():
+    """Checks that API returns status 415 for unsupported file uploaoding."""
     file_name = os.path.join(TESTING_FILES_DIR, FileName.INVALID_TYPE.value)
     with open(file_name, 'rb') as up_file:
         files = {'file': up_file}
